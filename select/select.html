@@ -1,0 +1,70 @@
+<html>
+<head><title>selector test</title></head>
+<style type="text/css">
+    a {
+        text-decoration: none;
+    }
+
+</style>
+<body>
+<div id="fruits">
+
+    <p>Orange</p>
+    <p>Apple</p>
+    <p>Banana&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" onclick="removeFruit(this)">remove this</a></p>
+    <p>Mango</p>
+    <p>Watermelon</p>
+    <a href="javascript:void(0);" onclick="reverseElement('fruits')">reverse fruits</a>
+</div>
+<div name="ancestor">
+    <div name="parent">
+        <div name="son"></div>
+    </div>
+
+</div>
+</body>
+</html>
+
+<script type="text/javascript" src="../jquery-3.3.1.js"></script>
+<script type="text/javascript">
+
+    function reverseElement(id) {
+        var collection = $("#" + id).find("p");
+        var html = "";
+        for (var i = collection.length - 1; i >= 0; i--) {
+            html += "<p>" + collection[i].innerText + "</p>";
+        }
+        $("#" + id).html(html);
+
+    }
+
+    console.clear();
+    var fruit;
+    fruit = $("#fruits a").length;
+    console.log(fruit);
+    fruit = $("#fruits > a").length;
+    console.log(fruit);
+
+    function removeFruit(invoker) {
+        console.log("this:" + this);
+        $(invoker).parent().remove();
+    }
+
+    $(document).ready(function () {
+        var child = "{";
+        $("div[name='ancestor']").child().each(function (i, e) {
+            child += " " + e.name;
+        });
+        child += " }";
+        console.log("child:" + child);
+
+        var children = "{";
+        $("div[name='ancestor']").children().each(function (i, e) {
+            children += " " + e.name;
+        });
+        children += " }";
+        console.log("children:" + children);
+
+    });
+
+</script>

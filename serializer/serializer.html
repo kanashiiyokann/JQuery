@@ -1,0 +1,42 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<head><title>form map test</title></head>
+<body>
+<form name="preset" url="www.baidu.com">
+    <input type="hidden" name="id" value="9527"/>
+    <input type="hidden" name="role" value="common"/>
+</form>
+<form name="editArea" url="www.sina.com">
+    <input type="text" name="useless" value="qiaonima" hidden/>
+    用户名 <input type="text" name="name" value="张三"/><br/>
+    性别<select name="sex">
+    <option value="male">男</option>
+    <option value="female">女</option>
+</select><br/>
+    age<input type="number" name="age" value="20"/><br/>
+    <span>  <a href="javascript:void(0);" onclick="output()"
+               style="text-decoration:none;font-size: larger;">提交</a></span><br/>
+    <a href="javascript:void(0);" onclick="clearThis()"
+       style="text-decoration:none;font-size: larger;">clear</a></span><br/>
+
+</form>
+
+
+</body>
+</html>
+<script type="text/javascript" src="../jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../jquery.kit.js"></script>
+<script type="text/javascript" charset="utf-8">
+    function output() {
+        var form = $(event.target).parents("form")
+        var obj = $.kit.serialize2object(form);
+        console.log(obj);
+
+    }
+
+    function clearThis() {
+        var form = $(event.target).parents("form")
+        $.kit.clearForm(form);
+    }
+
+</script>

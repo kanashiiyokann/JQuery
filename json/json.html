@@ -1,0 +1,40 @@
+<html>
+<head><title>json test</title>
+    <script type="text/javascript" charset="utf-8">
+        var urlMapping = {div: "/paltform/index.shtml", span: "/paltform/login.shtml", url3: "3"};
+        var pageInfo = {};
+        pageInfo.charSet = "utf-8";
+        pageInfo.extendName = "html";
+    </script>
+</head>
+<!--<style type="text/css">-->
+
+<!--</style>-->
+<body>
+<span id="span">this is  aparagraph</span>
+<div id="div">this is a division</div>
+</body>
+</html>
+<script type="text/javascript" src="../jquery-3.3.1.js"></script>
+<script type="text/javascript">
+    function loadData(fieldId) {
+        var url = urlMapping[fieldId];
+        var container = $("#" + fieldId);
+        debugger;
+        if (url != undefined && container.length > 0) {
+            console.log(container);
+            container.html(url);
+        }
+
+    }
+
+    $(document).ready(function () {
+        loadData("span");
+        loadData("div");
+        loadData("url3");
+
+
+        console.log(pageInfo);
+        console.log(urlMapping);
+    });
+</script>

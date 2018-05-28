@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form id="priceForm">
+    price: <input type="text" name="amount"><br>
+    unit: <input type="text" name="unit">
+    <a href="javascript:void(0);" id="ok">OK</a>
+</form>
+</body>
+</html>
+<script type="text/javascript" src="../jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../layer.js"></script>
+<script type="text/javascript" src="../jquery.serializer-1.0.js"></script>
+<script type="text/javascript">
+    $().ready(function () {
+        $("#ok", document).on("click", function () {
+            var data = $("#priceForm").serialize2object();
+            var callback = document.dataFetched;
+            if (callback != undefined) {
+                document.dataFetched(data);
+            }
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+
+        });
+
+    });
+
+</script>

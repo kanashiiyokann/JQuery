@@ -1,0 +1,32 @@
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="content-type">
+    <title>mult select test</title></head>
+<style type="text/css">
+</style>
+<input>
+<form id="form">
+    <input type="text" name="name" placeholder="here type in your name"/><br/>
+    <input type="password" name="pwd" placeholder="password here"/><br/>
+    <input type="checkbox" name="remember"/><span>remember me</span><br/>
+    <a href="javascript:void(0);" onclick="hiddenOtherElement()">login</a><br/>
+</form>
+<div id="fruits">
+    <p>Orange</p>
+    <p>Apple</p>
+    <p>Banana</p>
+    <p>Mango</p>
+    <p>Watermelon</p>
+</div>
+<button>nothing happen</button>
+<a class="other" href="javascript:void(0);" onclick="reverseElement('fruits')">reverse fruits</a>
+<a name="other" href="javascript:void(0);" onclick="reverseElement('fruits')">reverse fruits</a>
+</body>
+</html>
+
+<script type="text/javascript" src="../jquery-3.3.1.js"></script>
+<script type="text/javascript">
+    function hiddenOtherElement() {
+        $("p,button,a.other,a[name='other']").hide();
+    }
+</script>

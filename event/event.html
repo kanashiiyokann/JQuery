@@ -1,0 +1,31 @@
+<html>
+<head><title>event test</title>
+</head>
+<!--<style type="text/css">-->
+
+<!--</style>-->
+<body>
+<span>this is  aparagraph</span>
+<div></div>
+<div id="cube" style="background:#0b83f3;width: 100px;height:100px;" onclick="addLink()"></div>
+</body>
+</html>
+<script type="text/javascript" src="../jquery-3.3.1.js"></script>
+<script type="text/javascript">
+    var count = 0;
+
+    function addLink() {
+        var $e = $(event.target);
+        count++;
+        var str = '<a href="javascript:void(0);">' + count + '</a><br>';
+        $e.before(str);
+
+    }
+
+    $(document).ready(function () {
+        $("body").on("click", 'a', function () {
+            var c = $(event.target).text();
+            console.log("text=" + c);
+        });
+    });
+</script>

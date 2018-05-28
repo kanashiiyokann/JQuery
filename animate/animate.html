@@ -1,0 +1,45 @@
+<html>
+<head><title>selector test</title></head>
+<style type="text/css">
+    a {
+        text-decoration: none;
+    }
+
+</style>
+<body>
+<div id="block">hello</div>
+
+</body>
+</html>
+
+<script type="text/javascript" src="../jquery-3.3.1.js"></script>
+<script type="text/javascript">
+
+    $("#block").on("click", function () {
+        //
+        var obj = event.target;
+        var state = $.data(obj, "state");
+
+        if (state == undefined || state == "mini") {
+
+            $(obj).animate(
+                {fontSize: "10em"},
+                "1000",
+                "swing",
+                function () {
+                    $(obj).data("state", "huge");
+                });
+
+        } else {
+            $("#block").animate(
+                {fontSize: "1em"},
+                "1000",
+                "swing",
+                function () {
+                    $(obj).data("state", "mini");
+                });
+        }
+
+        //
+    });
+</script>

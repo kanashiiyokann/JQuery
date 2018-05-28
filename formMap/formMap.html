@@ -1,0 +1,69 @@
+<html>
+<head><title>form map test</title></head>
+w
+<body>
+<!--<form>  多层form只会有第一层生效 不允许嵌套 -->
+<form id="myForm">
+    用户名 <input type="text" name="name"/><br/>
+    密码<input type="password" name="pwd"/><br/>
+    <span>  <a href="javascript:void(0);" onclick="test()"
+               style="text-decoration:none;font-size: larger;">登录</a></span>
+</form>
+<!--</form>-->
+<div style="background: #9a9a9a;width: 300px;height:300px;" ondblclick="slideChid(this)">
+    <div style="background:#225533;width: 200px;height:200px;" status="show">this is a division</div>
+</div>
+
+</body>
+</html>
+<script src="../jquery-3.3.1.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+
+    function serializForm(invoker) {
+        var jForm = {};
+        var list = $(invoker).parents("form");
+        var form;
+        if (list.length == 1) {
+            form = $(list.eq(0));
+        }
+        else return "-1：not find parent form";
+        var inputList = form.find("input");
+        $(inputList).each(function (i, e) {
+            var key = $(e).attr("name");
+            var value = $(e).val();
+            jForm[key] = value;
+
+        });
+        var jstring = JSON.stringify(jForm)
+        console.log("jFomr:" + jstring);
+
+    }
+
+    function test(event) {
+        if (event != null & event != undefined) {
+            console.log("event:" + event);
+        } else {
+            console.log("empty event");
+        }
+
+    }
+
+
+    $(document).ready(function () {
+
+        $("#myForm input[name='name']").eq(0).change(function () {
+            var val = $(this).val();
+            console.log("value:" + val);
+        });
+    });
+
+    $(window).keydown(function (event) {
+        console.log(event.key + " with code:" + event.keyCode);
+    });
+
+
+    function slideChid(invoker) {
+        var child = $(invoker).child();
+
+    }
+</script>

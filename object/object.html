@@ -1,0 +1,54 @@
+<html>
+<head><title>object test</title></head>
+<style type="text/css">
+    ul {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    ul li {
+        float: left;
+        list-style: none;
+        margin-right: 40px;
+    }
+
+</style>
+<body>
+<div id="tb1"></div>
+<span></span><br/>
+<ul autofill items="1,2,3,4,5"></ul>
+<br/>
+<ul items="i,ii,iii" autofill></ul>
+<br/>
+<ul autofill items="a,b,c,d,e"></ul>
+<br/>
+<button id="rl">reload first</button>
+<br/>
+<p class="descr">In certain situations you might want to prevent text on the page from being selectable. Try selecting
+    this text and hit view source to see how it is done.</p>
+</body>
+</html>
+<script type="text/javascript" src="../jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../jquery.extend.table.js"></script>
+<script type="text/javascript">
+    $("#tb1").load("www.baidu.com");
+    $("span").load("www.sinna.com");
+
+    $("#rl").on("click", function () {
+        $("#tb1").reload();
+    });
+
+
+</script>
+
+
+<script>
+    // Prevent text from being selected
+    $(function () {
+        //     $('p.descr').attr('unselectable', 'on');
+//                .css('user-select', 'none')
+//                .on('selectstart', false);
+
+        $('p.descr').css('user-select', 'none');
+    });
+</script>

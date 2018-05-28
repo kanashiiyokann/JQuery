@@ -1,0 +1,105 @@
+﻿<html>
+<head><title>form map test</title>
+    <style>
+        .validate-tip div {
+            width: 0px;
+            height: 0px;
+            margin-left: 22px;
+            border-right: 12px solid #e78081;
+            border-top: 12px solid transparent;
+            float: left;
+        }
+
+        .validate-tip span {
+            height: 20px;
+            background-color: #e78081;
+            padding: 4px;
+            color: white;
+            border-radius: 2px;
+            box-shadow: 5px 5px 3px #888888;
+
+        }
+    </style>
+    <script src="../jquery.validator-1.0.js"></script>
+</head>
+<body>
+<div class="validate-tip">
+    <div></div>
+    <span>here is a tip to attation user what kind of txt should type in.</span>
+</div>
+<div class="div a">あいうえお</div>
+<div class="div ka">かきくけこ</div>
+<div class="div sa">さしすせそ</div>
+<div class="sa" hidden>sa</div>
+<div class="line-ta">たちつてと</div>
+<div>なにぬねの</div>
+<div>はひふへほ</div>
+<div>まみむめも</div>
+<div>や　う　よ</div>
+<div>らりるれろ</div>
+<div id="content" src="../pic/bg.jpg">
+</div>
+かみさま　
+</body>
+</html>
+<script src="../jquery-3.3.1.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    function TimeMachine(place, time) {
+        this.time = time;
+        var destination = place;
+        this.getDestination = function () {
+            return destination;
+        };
+    }
+
+    function test1() {
+        var tm = new TimeMachine("Beijing", "1990/3/29");
+        $("#content").append(tm.time + "<br/>");
+        $("#content").append(tm.destination + "<br/>");
+        $("#content").append(tm.getDestination() + "<br/>");
+
+        var len = $("div.div").each(function (i, e) {
+            console.log($(e).html());
+
+        });
+        var len = $("div:hidden").each(function (i, e) {
+            console.log($(e).html());
+
+        });
+    }
+
+    function test2() {
+        $("div").each(function (i, e) {
+            e = $(e);
+            e.on("click", function () {
+                var val = e.html();
+                console.log(val);
+            });
+        });
+
+        $("body div.line-ta").after("<div>なにぬねの</div>");
+    }
+
+    function test3() {
+        $("body").eq(0).on("click", "div", function () {
+            var val = $(this).html();
+            console.log(val);
+        });
+
+        $("body div.line-ta").after("<div>なにぬねの</div>");
+    }
+
+    function test4() {
+        var content = $("#content");
+        var src = content.attr("src");
+        content.data("src", src);//key不能带有-，驼峰命名
+        content.prop("src", src);
+        content.removeAttr("src");
+
+        console.log(content.data("src"));
+        console.log(content.prop("src"));
+    }
+
+    //test3();
+    test4();
+</script>

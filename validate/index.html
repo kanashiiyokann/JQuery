@@ -1,0 +1,44 @@
+<head><title>验证js</title>
+    <style type="text/css">
+        a {
+            text-decoration: none;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<html>
+<body>
+<form name="myform">
+    name:<input type="text" name="name" regex=""/><br/>
+    pwd:<input type="password" name="pwd" regex="^(?=.*[0-9])(?=.*[a-zA-Z]).{6,7}$"
+               hint="密码至少包含数字、字母俩种类型，且长度为6~7"/><br/>
+    age:<input type="text" name="age" regex="(^[1-9][0-9]*$)|(^$)" hint="请输入一个正整数"/><br/>
+    <a href="javascript:void(0);" id="clickButton" onclick="valudateCheck()"/>提交<br/>
+</form>
+
+</body>
+</html>
+<script type="text/javascript" src="../jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../jquery.validator-1.0.js"></script>
+<script type="text/javascript" src="../layer.js"></script>
+<script type="text/javascript">
+    function valudateCheck() {
+        console.log("1");
+
+    }
+
+    function valudateCheck2() {
+        console.log("2");
+
+    }
+
+
+    $("#clickButton").unbind("click");
+    $("#clickButton").bind("click", valudateCheck2());
+    $("#clickButton").removeAttr("onclick");
+    $("#clickButton").bind("click", function () {
+        console.log("3");
+    });
+
+
+</script>

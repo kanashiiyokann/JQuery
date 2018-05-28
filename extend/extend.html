@@ -1,0 +1,41 @@
+<html>
+<head><title>queue test</title>
+</head>
+<!--<style type="text/css">-->
+
+<!--</style>-->
+<body>
+<span></span>
+<div></div>
+</body>
+</html>
+<script type="text/javascript" src="../jquery-3.3.1.js"></script>
+<!--<script type="text/javascript" src="jquery.extend.js"></script>-->
+<script type="text/javascript">
+    jQuery.fn.extend({
+        hello: function () {
+            this.each(function () {
+                $(this).html("hello jquery!");
+            })
+        },
+        byebye: function () {
+            $(this).each(function () {
+                $(this).html("bye bye");
+            });
+        }
+    });
+    $.extend({
+        max: function (a, b) {
+            return a > b ? a : b;
+        },
+        min: function (a, b) {
+            return a < b ? a : b;
+        }
+    });
+
+    $("span").hello();
+    $("div").byebye();
+    var value = $.max(12, 21);
+    alert("max:" + value);
+
+</script>
