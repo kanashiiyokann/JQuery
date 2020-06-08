@@ -24,19 +24,12 @@
 
 </body>
 </html>
-<script type="text/javascript" src="../jquery-3.3.1.js"></script>
-<script type="text/javascript" src="../jquery.kit.js"></script>
+<script type="text/javascript" src="../Serializer.js"></script>
 <script type="text/javascript" charset="utf-8">
     function output() {
-        var form = $(event.target).parents("form")
-        var obj = $.kit.serialize2object(form);
-        console.log(obj);
-
-    }
-
-    function clearThis() {
-        var form = $(event.target).parents("form")
-        $.kit.clearForm(form);
+        let serializer = Serializer.of("body");
+        let data = serializer.serialize();
+        console.log(data);
     }
 
 </script>

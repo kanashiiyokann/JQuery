@@ -1,0 +1,170 @@
+<html>
+<head><title>iframe test</title></head>
+<style type="text/css">
+    .container span {
+        border: 1px black solid;
+        border-top: 0;
+        border-left: 0;
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+    }
+
+    .container > div > span:last-child {
+        border-right: 0;
+    }
+
+    .container > div:last-child > span {
+        border-bottom: 0;
+    }
+
+    .container i {
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        display: block;
+        position: relative;
+        top: -9px;
+        left: -9px;
+        border: 1px solid black;
+    }
+
+    .white {
+        background-color: white;
+    }
+
+    .black {
+        background-color: black;
+    }
+
+</style>
+<body>
+<div class="container" style="margin: 100px 400px;">
+
+</div>
+</body>
+</html>
+
+<script type="text/javascript" src="../sparseArray.js"></script>
+<script type="text/javascript">
+
+    class Gobang {
+
+        constructor(selector) {
+            this.scale = 30;
+            this.space = 4;
+            this.dom = document.querySelector(selector);
+        }
+
+        static of(selector) {
+            return new Gobang(selector);
+        }
+
+        /**
+         * 绘制背景
+         * @private
+         */
+        __drawBackground() {
+            let row = this.data.row;
+            let column = this.data.column;
+            this.canvas = document.createElement("canvas");
+            let cxt = this.canvas.getContext("2d");
+            cxt.strokeStyle = "rgba(0,155,200,0.82)";
+
+            this.canvas.height = (row + 1) * this.scale;
+            this.canvas.width = (column + 1) * this.scale;
+            for (let i = 1; i <= row; i++) {
+                let x = i * this.scale;
+                cxt.moveTo(x, 0);
+                cxt.lineTo(x, this.canvas.height);
+            }
+
+            for (let i = 1; i <= column; i++) {
+                let y = i * this.scale;
+                cxt.moveTo(0, y);
+                cxt.lineTo(this.canvas.width, y);
+            }
+
+            cxt.stroke();
+            this.dom.appendChild(this.canvas);
+
+            return this.canvas;
+        }
+
+        /**
+         *
+         * @private
+         */
+        __drawCursor() {
+            this.cursor = document.createElement("canvas");
+            let cxt = this.cursor.getContext("2d");
+            let size = this.scale - this.space;
+            cxt.fillStyle = 'rgba(255, 255, 255, 0)';
+            this.cursor.width = size;
+            this.cursor.height = size;
+            size = size / 2;
+            cxt.moveTo(this.space, size - this.space);
+            cxt.lineTo(size - this.space, size - this.space);
+            cxt.lineTo(size - this.space, this.space);
+
+            cxt.moveTo(this.space + size, this.space);
+            cxt.lineTo(this.space + size, size - this.space);
+            cxt.lineTo(size * 2 - this.space, size - this.space);
+
+            cxt.moveTo(this.space, this.space + size);
+            cxt.lineTo(size - this.space, this.space + size);
+            cxt.lineTo(size - this.space, 2 * size - this.space);
+
+            cxt.moveTo(2 * size - this.space, this.space + size);
+            cxt.lineTo(size + this.space, this.space + size);
+            cxt.lineTo(size + this.space, 2 * size - this.space);
+
+            cxt.stroke();
+
+            this.dom.appendChild(this.cursor);
+            this.cursor.style.position = "absolute";
+            this.cursor.style.zIndex = "999";
+            this.cursor.style.display = "none";
+
+            return this.cursor;
+        }
+
+        init(row, column) {
+            this.data = new SparseArray(row, column);
+            //绘制棋盘
+            let canvas = this.__drawBackground();
+
+            let cursor = this.__drawCursor();
+            //棋盘事件
+            let section = this;
+            canvas.addEventListener("mousemove", function (event) {
+                let top = Math.round((event.pageY - section.canvas.offsetTop) / section.scale);
+                let left = Math.round((event.pageX - section.canvas.offsetLeft) / section.scale);
+
+                console.log(top, left);
+                if (top === 0 || top > section.data.row || left === 0 || left > section.data.column) {
+                    cursor.style.display = "none";
+                    return;
+                } else {
+                    cursor.style.display = "block";
+                }
+
+                top = top * section.scale - cursor.height / 2;
+                left = left * section.scale - cursor.width / 2;
+                cursor.style.left = (canvas.offsetLeft + left) + 'px';
+                cursor.style.top = (canvas.offsetTop + top) + 'px';
+                //  console.log(event.layerX, event.layerY);
+            });
+        }
+
+
+        set(row, column, black = true) {
+            this.data.add(row, column, black ? 1 : 0);
+        }
+
+
+    }
+
+    Gobang.of("body div").init(20, 20);
+
+</script>

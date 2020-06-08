@@ -1,0 +1,29 @@
+<html>
+<head><title>template test</title></head>
+<body>
+<div></div>
+</body>
+</html>
+
+<script type="text/javascript" src="../Template.js"></script>
+<script type="text/html" id="template-test">
+    <div>
+        <if test=" name==='admin' ">
+            <span>this a admin:{{name}}</span>
+        </if>
+        <if test=" name!=='admin' ">
+            <span>common user : {{name}}</span>
+        </if>
+    </div>
+
+
+</script>
+<script type="text/javascript">
+
+    let arr = [{name: 'admin'}, {name: 'tom'}];
+
+    let template = Template.fromDocument("template-test");
+    document.querySelector("body div").innerHTML = arr.map(e => template.fill(e)).join("");
+
+
+</script>

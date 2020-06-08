@@ -1,0 +1,49 @@
+<html>
+<head><title>iframe test</title></head>
+<style type="text/css">
+    a {
+        text-decoration: none;
+    }
+
+    .hidden{
+        display: none;
+    }
+    .iframe-container{
+        background-color: #9a9a9a;
+        display: inline-block;
+        min-width: 300px;
+        max-width: 450px;
+        min-height: 200px;
+        max-height: 300px;
+        overflow:hidden;
+    }
+    iframe{
+        height: 100%;
+        width: 100%;
+    }
+</style>
+<body>
+<div>this main view</div>
+<div class="iframe-container hidden">
+<iframe uri="part.html" frameborder="0"></iframe>
+</div>
+</body>
+</html>
+
+<script type="text/javascript" src="../jquery-3.3.1.js"></script>
+<script type="text/javascript">
+    window.name="main view";
+    $(document).one("click", function () {
+
+        $("iframe[uri]").each(function (i, e) {
+            let src = e.getAttribute("uri");
+            e.setAttribute("src", src);
+            e.parentElement.className=(e.parentElement.className||"").replace("hidden","");
+            e.removeAttribute("uri");
+
+        });
+
+    });
+
+
+</script>
