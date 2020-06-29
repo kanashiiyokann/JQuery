@@ -1,5 +1,4 @@
 class Serializer {
-    selection;
 
     constructor(selector) {
         this.selection = document.querySelectorAll(selector);
@@ -12,7 +11,31 @@ class Serializer {
         return new Serializer(selector);
     }
 
-    echo() {
+    echo(data, options) {
+        let defaults = {
+            supply: false
+        };
+        this.__mergeObject(defaults, options);
+
+        let elemList = [];
+
+        this.selection.forEach(e => {
+            elemList = elemList.concat(Array.prototype.slice.call(e.querySelectorAll('*[name]')));
+        });
+
+        elemList.forEach(e => {
+            let value = data[e.name];
+            if (!value && value !== 0 && defaults.supply) {
+                return;
+            }
+            if ('value' in e) {
+                e.value = value;
+            } else {
+                e.innerHTML = value;
+            }
+
+        });
+
 
     }
 
@@ -33,8 +56,10 @@ class Serializer {
 
         let nodeList = this.selection;
         //如果有副选择器
-        if (setting.subSelector) {
-            nodeList = nodeList.querySelectorAll(setting.subSelector);
+        if (setting.subSelector && this.selection.length === 1) {
+            nodeList = nodeList[0].querySelectorAll(setting.subSelector);
+        } else {
+            console.error("only  use sub selector in one section!")
         }
 
         let array = [];
@@ -59,33 +84,48 @@ class Serializer {
             return data;
         }
         items.forEach(function (e) {
-            let value, tagName;
+            let value, tagName, name, subName = undefined;
             //处理隐藏元素
             if (e.hidden && !setting.includeHidden) {
                 return;
             }
+            name = e.name;
             //没有name属性不序列化
-            if (!e.name) {
+            if (!name) {
                 return;
+            }
+            if (name.indexOf(",") > -1) {
+                let arr = name.split(",");
+                name = arr[0].trim();
+                subName = arr[1].trim();
             }
             //设置排除标签的不序列化
             if (e.hasAttribute(setting.exclude)) {
                 return;
             }
             value = e.value || e.innerText || "";
+            tagName = e.tagName.toLowerCase();
+            if (tagName === 'select') {
+                let option = e.selectedOptions[0] || {};
+                value = option.value || '';
+                if (subName) {
+                    data[subName] = option.text;
+                }
+            }
             //trim处理
             if (setting.trimString && typeof value === "string") {
                 value = value.trim();
             }
             //空值处理
             if (!value && !setting.allowEmpty) {
+                data[subName] = undefined;
                 return;
             }
-            data[e.name] = value;
+
+            data[name] = value;
 
         });
 
-        //  tagName = e.tagName.toLowerCase();
 
         //         if (tagName === "input" && e.getAttribute("type") === 'radio') {//多选按钮特殊处理
         //
@@ -140,4 +180,6 @@ class Serializer {
     }
 
 }
+
+
 

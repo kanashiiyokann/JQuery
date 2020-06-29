@@ -22,8 +22,7 @@
 
     let arr = [{name: 'admin'}, {name: 'tom'}];
 
-    let template = Template.fromDocument("template-test");
-    document.querySelector("body div").innerHTML = arr.map(e => template.fill(e)).join("");
+    window.template = Template.fromDocument("template-test");
 
 
 </script>

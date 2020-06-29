@@ -1,49 +1,22 @@
 <html>
 <head><title>queue test</title></head>
-<style type="text/css">
-    div {
-        margin: 3px;
-        width: 40px;
-        height: 40px;
-        position: absolute;
-        left: 0px;
-        top: 30px;
-        background: green;
-        display: none;
-    }
-
-    div.newcolor {
-        background: blue;
-    }
-
-    span {
-        color: red;
-    }
-</style>
 <body>
-<button id="show">Show Length of Queue</button>
-<span></span>
-<div></div>
+
 </body>
 </html>
-<script type="text/javascript" src="../jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../Queue.js"></script>
 <script type="text/javascript">
-    $("#show").click(function () {
-        var n = $("div").queue("fx");
-        $("span").text("Queue length is: " + n.length);
+
+    Queue.of(resolve => {
+        setTimeout(() => {
+            resolve("等了1秒！")
+        }, 1000);
+    }, resolve => {
+        setTimeout(() => {
+            resolve('等了4秒！')
+        }, 4000);
+    }).then(dataBundle => {
+        console.log(Array.prototype.slice.call(dataBundle));
     });
-
-    function runIt() {
-        $("div").show("slow");
-        $("div").animate({left: '+=200'}, 2000);
-        $("div").slideToggle(1000);
-        $("div").slideToggle("fast");
-        $("div").animate({left: '-=200'}, 1500);
-        $("div").hide("slow");
-        $("div").show(1200);
-        $("div").slideUp("normal", runIt);
-    }
-
-    runIt();
 
 </script>
