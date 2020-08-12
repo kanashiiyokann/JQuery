@@ -1,0 +1,49 @@
+<html>
+<head><title>floating test</title></head>
+<style type="text/css">
+    .head {
+        height: 80px;
+        background-color: #9a9a9a;
+    }
+
+    .bar {
+        height: 40px;
+        background-color: #489a97;
+    }
+
+    .body {
+        height: 2000px;
+    }
+
+</style>
+<body>
+<div class="head">this is head</div>
+<div class="bar">this is action bar</div>
+<div class="body">this is body</div>
+</body>
+</html>
+<script type="text/javascript">
+
+
+    let person={name:'tom',age:18};
+
+    let handler={
+        get(target,key){
+            console.log("you invoke getter ,get person's "+key+" ,and value is "+target[key]);
+            return target[key];
+        },
+        set(target,key,value){
+            console.log("person's "+key+' was set to '+value);
+            target[key]=value;
+        }
+    };
+
+    let proxy=new Proxy(person,handler);
+
+    console.error(`my name is ${proxy.name}`);
+
+
+    window.onunload=function(){
+        debugger;
+    }
+</script>

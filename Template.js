@@ -96,8 +96,8 @@ class Template {
             let tag = ifList[0];
             let express = tag.getAttribute("test");
             if (eval("data." + express)) {
-                for (let child of tag.children) {
-                    tag.parentElement.insertBefore(child, tag);
+                while (tag.childNodes.length > 0) {
+                    tag.parentElement.insertBefore(tag.childNodes[0], tag);
                 }
             }
             tag.remove();

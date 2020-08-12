@@ -1,0 +1,125 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>layer</title>
+    <style type="text/css">
+        ._bar_ul {
+            border: 1px solid black;
+            display: inline-block;
+            list-style: none;
+            position: relative;
+            padding: 0;
+            margin: 0;
+            box-shadow: 1px 1px 1px 1px #888888;
+        }
+
+        ._bar_ul li {
+            min-width: 50px;
+            margin: 8px 8px 8px 12px;
+            cursor: pointer;
+
+        }
+
+        ._bar_ul li:hover {
+            background-color: #9a9a9a;
+        }
+
+        ._bar_ul:before {
+            content: '';
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            border-right-color: black;
+            position: absolute;
+            left: -20px;
+            top: 10px;
+
+        }
+
+        ._bar_ul:after {
+            content: '';
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            border-right-color: white;
+            position: absolute;
+            left: -19px;
+            top: 10px;
+
+        }
+
+        .container {
+            position: absolute;
+            display: none;
+            z-index: 99;
+        }
+
+    </style>
+</head>
+<body>
+</body>
+</html>
+<script type="text/javascript" src="../jquery-3.3.1.js"></script>
+<script type="text/javascript">
+
+
+    class ActionBar {
+        constructor(selector) {
+            this.selector = selector;
+        }
+
+        static of(selector) {
+            return new this(selector);
+        }
+
+        actions(...actions) {
+            let index = 0;
+            let html = actions.map(e => `<li>${e.name}</li>`).join('');
+            let content = document.createElement("div");
+            this.content = content;
+            content.className = 'container';
+            content.innerHTML = `<ul class="_bar_ul">${html}</ul>`;
+            let trigger = document.querySelector('body');
+            trigger.appendChild(this.content);
+
+            //阻止事件冒泡
+            content.addEventListener('click', event => {
+                event.stopPropagation();
+            });
+            //按钮事件
+            content.querySelectorAll('li').forEach((e, i) => {
+                let action = actions[i] || {};
+                action = action.action || function () {
+                    console.error("标签对应方法未实现！")
+                };
+                e.addEventListener('click', e => {
+                    if (typeof action === "function") {
+                        action(trigger, content, e);
+                    }
+                });
+            });
+
+            document.querySelector(this.selector).addEventListener('click', event => {
+                content.style.display = 'inline-block';
+                content.style.left = event.pageX + 20 + 'px';
+                content.style.top = event.pageY - 20 + 'px';
+            });
+
+        }
+    }
+
+
+</script>
+<script type="text/javascript">
+
+    ActionBar.of('body').actions({name: '编辑'}, {name: '删除'}, {
+            name: '标记完成', action(trigger, bar) {
+                console.log(trigger, bar);
+                //todo  method implements
+                bar.style.display = 'none';
+            }
+        },
+        {name: '备注'}
+    );
+</script>
+
